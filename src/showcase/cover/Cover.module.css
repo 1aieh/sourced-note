@@ -1,0 +1,129 @@
+.cover {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+  padding: clamp(28px, 6vw, 72px);
+  padding-bottom: var(--cv-links, 60px);
+  text-align: center;
+  background:
+    radial-gradient(
+      120% 80% at 100% 0%,
+      color-mix(in oklab, var(--sn-accent) 7%, transparent),
+      transparent 60%
+    ),
+    var(--sn-surface);
+}
+@media (max-width: 600px) {
+  .cover {
+    padding-bottom: min(var(--cv-links, 60px), 40px);
+  }
+}
+
+/* The centre group sits in the middle; the links keep to the bottom edge. */
+.inner {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 560px;
+  margin: auto;
+}
+
+.title {
+  margin: var(--cv-pill, 14px) 0 0;
+  font-size: clamp(44px, 7vw, var(--cv-h1, 76px));
+  line-height: 0.98;
+  font-weight: 650;
+  letter-spacing: -0.045em;
+}
+
+.sub {
+  margin: var(--cv-title, 20px) 0 0;
+  max-width: var(--cv-sub, 30em);
+  font-size: clamp(16px, 1.6vw, 18px);
+  line-height: 1.55;
+  color: var(--sn-ink-2);
+  text-wrap: pretty;
+}
+
+/* White on the indigo glass. */
+.cta.cta[data-tone] {
+  --button-height: 48px;
+  --button-padding-x: 22px;
+  --tone-bg: #fff;
+  --tone-hover: #f6f7ff;
+  --tone-fg: #14171c;
+  margin-top: var(--cv-cta, 32px);
+  font-size: 15px;
+  box-shadow:
+    0 0 0 1px rgb(20 23 28 / 0.06),
+    0 1px 2px rgb(20 23 28 / 0.08),
+    0 8px 24px -8px rgb(52 80 209 / 0.35);
+}
+.cta svg {
+  color: #3450d1;
+}
+.ctaTime {
+  margin-left: 2px;
+  padding-left: 12px;
+  border-left: 1px solid rgb(20 23 28 / 0.18);
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  opacity: 0.8;
+}
+
+.links {
+  position: relative;
+  z-index: 1;
+  flex: none;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-top: 24px;
+}
+
+/* ------------------------------------------------------------ shader background */
+.bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  border-radius: inherit;
+  pointer-events: none;
+}
+.bgCanvas {
+  position: absolute;
+  inset: 0;
+  transition: opacity 400ms ease;
+  animation: fade-in 1.2s ease both;
+}
+.bgCanvas canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+/* Paper over the middle, so the type sits on calm ground. */
+.veil {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    60% 55% at 50% 50%,
+    color-mix(in oklab, var(--sn-surface) calc(var(--veil) * 100%), transparent),
+    transparent 100%
+  );
+}
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .bgCanvas {
+    animation: none;
+  }
+}

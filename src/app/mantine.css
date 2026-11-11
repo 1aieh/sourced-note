@@ -1,0 +1,16 @@
+/* Only the Mantine styles the app uses, in the `mantine` cascade layer so the
+   app's own CSS modules always win without specificity tricks. */
+@import '@mantine/core/styles/baseline.layer.css';
+@import '@mantine/core/styles/default-css-variables.layer.css';
+@import '@mantine/core/styles/global.layer.css';
+@import '@mantine/core/styles/UnstyledButton.layer.css';
+@import '@mantine/core/styles/Button.layer.css';
+@import '@mantine/core/styles/ActionIcon.layer.css';
+@import '@mantine/core/styles/Avatar.layer.css';
+@import '@mantine/core/styles/Badge.layer.css';
+@import '@mantine/core/styles/Kbd.layer.css';
+@import '@mantine/core/styles/Input.layer.css';
+@import '@mantine/core/styles/InlineInput.layer.css';
+@import '@mantine/core/styles/Switch.layer.css';
+@import '@mantine/core/styles/Popover.layer.css';
+@import '@mantine/core/styles/Tooltip.layer.css';

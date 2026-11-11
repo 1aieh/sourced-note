@@ -1,0 +1,119 @@
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  flex: none;
+  height: 26px;
+  padding: 0 10px;
+  border-radius: 999px;
+  font-size: 12.5px;
+  font-weight: 500;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+  color: var(--sn-ink-2);
+  background: var(--sn-hover);
+  box-shadow: inset 0 0 0 1px var(--sn-line);
+  transition:
+    color 200ms ease,
+    background-color 200ms ease,
+    box-shadow 200ms ease,
+    transform 160ms var(--sn-ease-out);
+}
+.pill[data-tone='live'] {
+  color: var(--sn-rec);
+  background: color-mix(in oklab, var(--sn-rec) 10%, transparent);
+  box-shadow: none;
+}
+.pill[data-tone='needs'] {
+  color: var(--sn-needs);
+  background: var(--sn-needs-soft);
+  box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--sn-needs) 20%, transparent);
+}
+.pill[data-tone='ready'],
+.pill[data-tone='done'] {
+  color: var(--sn-ok);
+  background: color-mix(in oklab, var(--sn-ok) 11%, transparent);
+  box-shadow: none;
+}
+
+.pill[data-action] {
+  cursor: pointer;
+  &:active {
+    transform: scale(0.97);
+  }
+  &:focus-visible {
+    outline: 2px solid var(--sn-accent);
+    outline-offset: 2px;
+  }
+}
+@media (hover: hover) and (pointer: fine) {
+  .pill[data-action]:hover {
+    filter: brightness(0.97);
+  }
+}
+
+.label {
+  display: inline-grid;
+}
+
+.go {
+  display: grid;
+  margin-right: -4px;
+  transform: rotate(90deg);
+  opacity: 0.8;
+}
+.go svg {
+  width: 13px;
+  height: 13px;
+}
+
+.segs {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 8px;
+  gap: 2px;
+}
+.segs span {
+  height: 6px;
+  border-radius: 2px;
+  background: var(--sn-ink-4);
+  opacity: 0.5;
+  transition:
+    background-color 280ms ease,
+    opacity 280ms ease;
+}
+.segs span[data-tone='ready'] {
+  background: var(--sn-ok);
+  opacity: 1;
+}
+.segs span[data-tone='needs'] {
+  background: var(--sn-needs);
+  opacity: 1;
+}
+[data-note-compact] .segs {
+  display: none;
+}
+
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+}
+.dot[data-pulse] {
+  animation: blink 1.1s ease-in-out infinite;
+}
+@keyframes blink {
+  50% {
+    opacity: 0.3;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dot[data-pulse] {
+    animation: none;
+  }
+  .pill[data-action]:active {
+    transform: none;
+  }
+}

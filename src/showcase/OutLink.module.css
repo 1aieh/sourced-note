@@ -1,0 +1,114 @@
+.pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  width: 100%;
+  max-width: 360px;
+}
+.pair[data-big] {
+  max-width: 440px;
+  gap: 12px;
+}
+
+.link {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px 10px 10px;
+  border-radius: 12px;
+  text-align: left;
+  text-decoration: none;
+  color: var(--sn-ink);
+  background: color-mix(in oklab, var(--sn-surface) 70%, transparent);
+  box-shadow: inset 0 0 0 1px var(--sn-line);
+  transition:
+    box-shadow 150ms ease,
+    background-color 150ms ease,
+    transform 150ms ease;
+
+  &:active {
+    transform: scale(0.98);
+  }
+  &:focus-visible {
+    outline: 2px solid var(--sn-accent);
+    outline-offset: 3px;
+  }
+}
+.pair[data-big] .link {
+  padding: 14px 16px 14px 14px;
+  border-radius: 16px;
+  background: var(--sn-surface);
+  box-shadow:
+    0 0 0 1px var(--sn-line),
+    0 8px 24px -16px rgb(20 24 32 / 0.35);
+}
+
+.icon {
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  color: var(--sn-brand-linkedin);
+}
+.icon img {
+  display: block;
+  width: 24px;
+  height: 24px;
+}
+
+.text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.title {
+  font-size: 14px;
+  font-weight: 550;
+  line-height: 1.25;
+}
+.sub {
+  font-size: 12px;
+  line-height: 1.3;
+  white-space: nowrap;
+  color: var(--sn-ink-3);
+}
+.pair[data-big] .title {
+  font-size: 15px;
+}
+.pair[data-big] .sub {
+  font-size: 13px;
+}
+
+.go {
+  color: var(--sn-ink-3);
+  opacity: 0.7;
+  transition:
+    opacity 150ms ease,
+    transform 150ms ease;
+}
+
+@media (max-width: 420px) {
+  .link {
+    grid-template-columns: auto 1fr;
+  }
+  .go {
+    display: none;
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .link:hover {
+    box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--sn-ink) 22%, transparent);
+  }
+  .link:hover .go {
+    opacity: 1;
+    transform: translate(1px, -1px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .link:active {
+    transform: none;
+  }
+}

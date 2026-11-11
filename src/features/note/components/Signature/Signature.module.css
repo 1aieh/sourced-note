@@ -1,0 +1,170 @@
+.sign {
+  margin-top: 36px;
+}
+
+.line {
+  display: flex;
+  align-items: flex-end;
+  min-height: 76px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--sn-ink);
+  transition: border-color 200ms ease;
+}
+.line[data-ready] {
+  border-bottom-color: var(--sn-accent);
+}
+.line[data-short] {
+  min-height: 60px;
+}
+
+.slot {
+  display: flex;
+  align-items: flex-end;
+}
+
+/* When the button appears, two soft rings draw the eye to it, then it stays still. */
+.slot:has(.hold) {
+  position: relative;
+}
+.slot:has(.hold)::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 4px;
+  width: 100%;
+  height: 48px;
+  border-radius: 999px;
+  pointer-events: none;
+  animation: halo 1.4s 0.3s var(--sn-ease-out) 2 both;
+}
+@keyframes halo {
+  from {
+    box-shadow: 0 0 0 0 color-mix(in oklab, var(--sn-ink) 28%, transparent);
+  }
+  to {
+    box-shadow: 0 0 0 12px color-mix(in oklab, var(--sn-ink) 0%, transparent);
+  }
+}
+
+.hint {
+  padding-bottom: 4px;
+  font-size: 0.87em;
+  color: var(--sn-ink-3);
+}
+.hint[data-faint] {
+  color: var(--sn-ink-4);
+}
+
+.mark {
+  width: 222px;
+  height: 60px;
+  overflow: visible;
+}
+.mark[data-size='sm'] {
+  width: 160px;
+  height: 44px;
+}
+.mark[data-size='lg'] {
+  width: 180px;
+  height: 50px;
+}
+.mark path {
+  fill: none;
+  stroke: var(--sn-ink);
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.caption {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 6px;
+  font-size: 12.5px;
+  color: var(--sn-ink-3);
+}
+.stamp {
+  font-family: var(--sn-mono);
+  font-size: 0.8em;
+  font-variant-numeric: tabular-nums;
+}
+
+.hold {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  height: 48px;
+  padding: 0 22px;
+  margin-bottom: 4px;
+  border: 0;
+  border-radius: 999px;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--sn-paper);
+  background: var(--sn-ink);
+  box-shadow:
+    0 1px 2px rgb(0 0 0 / 0.12),
+    0 10px 24px -10px color-mix(in oklab, var(--sn-ink) 55%, transparent);
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: none;
+  transition: transform 160ms var(--sn-ease-out);
+
+  &:active {
+    transform: scale(0.98);
+  }
+  &:focus-visible {
+    outline: 2px solid var(--sn-accent);
+    outline-offset: 3px;
+  }
+}
+.hold[data-preview] {
+  display: inline-flex;
+  align-items: center;
+  height: 42px;
+  padding: 0 18px;
+  font-size: 13px;
+  cursor: default;
+}
+
+.fill {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  color: var(--sn-on-accent);
+  background: var(--sn-accent);
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path 200ms var(--sn-ease-out);
+}
+.hold[data-preview] .fill {
+  display: flex;
+  align-items: center;
+  padding: 0 18px;
+}
+.hold[data-holding] .fill {
+  clip-path: inset(0 0 0 0);
+  transition: clip-path var(--hold, 1.1s) linear;
+}
+.fill[data-reduce] {
+  clip-path: none;
+  opacity: 0;
+  transition: opacity 200ms ease;
+}
+.hold[data-holding] .fill[data-reduce] {
+  opacity: 1;
+  transition: opacity var(--hold, 1.1s) linear;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .slot:has(.hold)::before {
+    animation: none;
+  }
+  .hold:active {
+    transform: none;
+  }
+}

@@ -1,0 +1,195 @@
+.kit {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+@media (max-width: 760px) {
+  .kit {
+    grid-template-columns: 1fr;
+  }
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  overflow: hidden;
+  border-radius: 16px;
+  background: var(--sn-surface);
+  box-shadow: var(--sn-shadow-card);
+}
+.card[data-span] {
+  grid-column: 1 / -1;
+}
+.head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--sn-line);
+}
+.name {
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+.note {
+  font-family: var(--sn-mono);
+  font-size: 11.5px;
+  text-align: right;
+  color: var(--sn-ink-3);
+}
+.body {
+  flex: 1 1 auto;
+  display: grid;
+  align-content: start;
+  gap: 14px;
+  padding: 18px;
+  font-size: 14px;
+  line-height: 1.5;
+  background: color-mix(in oklab, var(--sn-bg) 55%, var(--sn-surface));
+}
+.wrap {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.rows {
+  display: grid;
+  padding: 0 14px;
+  border-radius: 12px;
+  background: var(--sn-paper);
+  box-shadow: inset 0 0 0 1px var(--sn-line);
+}
+.row {
+  display: grid;
+  grid-template-columns: 16px 150px minmax(0, 1fr) 104px;
+  align-items: center;
+  column-gap: 14px;
+  box-sizing: border-box;
+  min-height: 52px;
+  padding: 8px 0;
+}
+.row + .row {
+  border-top: 1px solid var(--sn-rule);
+}
+.rowLabel {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--sn-ink-2);
+}
+.row[data-status='needs'] .rowLabel {
+  color: var(--sn-ink);
+}
+.rowValue {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  column-gap: 10px;
+  min-width: 0;
+}
+.by {
+  font-size: 12.5px;
+  color: var(--sn-ink-3);
+}
+.skeleton {
+  display: block;
+  width: 46%;
+  height: 12px;
+  border-radius: 4px;
+  background: var(--sn-skel);
+}
+.rowQuestion {
+  display: block;
+  width: 100%;
+  padding: 8px 12px;
+  border-radius: 10px;
+  font-size: 13.5px;
+  color: var(--sn-ink-2);
+  background: var(--sn-needs-soft);
+  box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--sn-needs) 26%, transparent);
+}
+.rowCite {
+  display: flex;
+  justify-content: flex-end;
+}
+@media (max-width: 760px) {
+  .row {
+    grid-template-columns: 16px minmax(0, 1fr) auto;
+    row-gap: 4px;
+  }
+  .rowLabel {
+    grid-column: 2;
+  }
+  .rowCite {
+    grid-column: 3;
+    grid-row: 1;
+  }
+  .rowValue {
+    grid-column: 2 / -1;
+  }
+}
+
+/* A typed answer, frozen mid-word. */
+.input {
+  display: flex;
+  align-items: center;
+  margin-top: 6px;
+  box-shadow: inset 0 0 0 1.5px color-mix(in oklab, var(--sn-accent) 60%, transparent);
+}
+.caret {
+  width: 1.5px;
+  height: 18px;
+  margin-left: 1px;
+  background: var(--sn-accent);
+  animation: blink 1s steps(1) infinite;
+}
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+.recDot {
+  display: block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.docks {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+.docks > * {
+  margin: 0;
+}
+.docks > *::before {
+  display: none;
+}
+@media (max-width: 1040px) {
+  .docks {
+    grid-template-columns: 1fr;
+  }
+}
+
+.sigs {
+  display: grid;
+  gap: 10px;
+}
+
+.docs {
+  display: grid;
+  gap: 8px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .caret {
+    animation: none;
+  }
+}

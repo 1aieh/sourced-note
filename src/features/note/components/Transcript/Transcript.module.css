@@ -1,0 +1,112 @@
+.turns {
+  list-style: none;
+  margin: 0;
+  padding: 0 0 24px;
+  display: grid;
+  gap: 14px;
+}
+.turns[data-tail-room] {
+  padding-bottom: 40vh;
+}
+
+.turn {
+  display: grid;
+  grid-template-columns: 74px minmax(0, 1fr);
+  column-gap: 12px;
+}
+
+.meta {
+  display: grid;
+  align-content: start;
+  padding-top: 3px;
+  font-size: 12px;
+  line-height: 1.35;
+  color: var(--sn-ink-3);
+}
+
+.time {
+  font-family: var(--sn-mono);
+  font-size: 0.8em;
+  font-variant-numeric: tabular-nums;
+}
+
+.text {
+  margin: 0;
+  color: var(--sn-ink);
+  text-wrap: pretty;
+}
+.turn[data-speaker='Clinician'] .text {
+  color: var(--sn-ink-2);
+}
+
+/* Phones and the transcript sheet: speaker and time sit above the words. */
+[data-note-compact] .turn,
+.turns[data-stacked] .turn {
+  grid-template-columns: 1fr;
+  row-gap: 2px;
+}
+[data-note-compact] .meta,
+.turns[data-stacked] .meta {
+  display: flex;
+  gap: 8px;
+}
+.turns[data-stacked] {
+  padding: 8px 20px 24px;
+}
+
+/* Words arrive one after another, out of a soft blur, in place. */
+.turn[data-animate] .meta {
+  animation: fade-in 240ms var(--sn-ease-out) both;
+}
+.turn[data-animate] [data-word] {
+  animation: word-in 420ms var(--sn-ease-out) both;
+  animation-delay: calc(var(--i) * var(--wp, 0s));
+}
+.turns[data-paused] [data-word],
+.turns[data-paused] .meta {
+  animation-play-state: paused;
+}
+
+@keyframes word-in {
+  from {
+    opacity: 0;
+    filter: blur(3px);
+  }
+}
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+}
+
+.mark {
+  color: inherit;
+  background-color: transparent;
+  border-radius: 3px;
+  padding: 1px;
+  margin: -1px;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+  text-decoration-line: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+  text-decoration-color: transparent;
+  transition:
+    background-color 180ms ease,
+    text-decoration-color 180ms ease,
+    color 180ms ease;
+}
+.mark[data-used] {
+  cursor: pointer;
+  text-decoration-color: color-mix(in oklab, var(--sn-accent) 28%, transparent);
+}
+.mark[data-active] {
+  color: var(--sn-ink);
+  background-color: color-mix(in oklab, var(--sn-accent) calc(var(--hl, 0.16) * 100%), transparent);
+  text-decoration-color: var(--sn-accent);
+}
+@media (hover: hover) and (pointer: fine) {
+  .mark[data-used]:hover {
+    background-color: color-mix(in oklab, var(--sn-accent) calc(var(--hl, 0.16) * 60%), transparent);
+  }
+}

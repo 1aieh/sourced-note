@@ -1,0 +1,24 @@
+.glyph {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 16px;
+  height: 16px;
+  flex: none;
+}
+
+/* Swaps cross-fade in one cell, so the outgoing mark never pushes the new one aside. */
+.glyph > * {
+  grid-area: 1 / 1;
+}
+
+.svg {
+  display: block;
+  color: var(--sn-ok);
+}
+.svg[data-status='empty'] {
+  color: var(--sn-ink-4);
+}
+.svg[data-status='needs'] {
+  color: var(--sn-needs);
+}

@@ -1,0 +1,64 @@
+.button {
+  --button-height: 40px;
+  --button-padding-x: 18px;
+  --button-radius: 999px;
+  flex: none;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: -0.005em;
+  transition:
+    transform 160ms var(--sn-ease-out),
+    background-color 150ms ease,
+    box-shadow 150ms ease;
+
+  &:active {
+    transform: scale(0.96);
+  }
+  &:focus-visible {
+    outline: 2px solid var(--sn-accent);
+    outline-offset: 2px;
+  }
+}
+
+.button[data-tone='primary'] {
+  --tone-bg: var(--sn-accent);
+  --tone-hover: color-mix(in oklab, var(--sn-accent) 88%, var(--sn-ink));
+  --tone-fg: var(--sn-on-accent);
+}
+.button[data-tone='secondary'] {
+  --tone-bg: var(--sn-ink);
+  --tone-hover: color-mix(in oklab, var(--sn-ink) 86%, var(--sn-bg));
+  --tone-fg: var(--sn-surface);
+}
+.button[data-tone='quiet'] {
+  --tone-bg: transparent;
+  --tone-hover: var(--sn-hover);
+  --tone-fg: var(--sn-ink-2);
+}
+.button[data-tone='record'] {
+  --tone-bg: var(--sn-rec);
+  --tone-hover: color-mix(in oklab, var(--sn-rec) 88%, var(--sn-ink));
+  --tone-fg: #fff;
+}
+
+/* Mantine sets its variant colours inline as variables, so the tones set the properties themselves. */
+.button,
+.button:hover {
+  background: var(--tone-bg);
+  color: var(--tone-fg);
+}
+@media (hover: hover) and (pointer: fine) {
+  .button:hover {
+    background: var(--tone-hover);
+  }
+}
+
+.section {
+  display: inline-flex;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .button:active {
+    transform: none;
+  }
+}

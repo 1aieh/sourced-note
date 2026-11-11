@@ -1,0 +1,33 @@
+.playground {
+  height: 100%;
+  background: var(--sn-bg);
+}
+.playground[data-framed] {
+  background: color-mix(in oklab, var(--sn-bg) 82%, var(--sn-ink));
+}
+.fill {
+  height: 100%;
+  padding-right: 304px;
+}
+.stage {
+  display: grid;
+  place-items: center;
+  gap: 12px;
+  box-sizing: border-box;
+  height: 100%;
+  overflow: auto;
+  padding: 40px 360px 40px 40px;
+}
+.frame {
+  position: relative;
+  flex: none;
+  overflow: hidden;
+  border-radius: 28px;
+  background: var(--sn-bg);
+  box-shadow: var(--sn-shadow-pop);
+}
+.caption {
+  font-family: var(--sn-mono);
+  font-size: 12px;
+  color: var(--sn-ink-3);
+}

@@ -1,0 +1,57 @@
+/* The page scrolls as a document, unlike the full-height workspace. */
+:global(html):has(.page),
+:global(html):has(.page) :global(body),
+:global(html):has(.page) :global(#root) {
+  height: auto;
+}
+
+.page {
+  --cs-max: 1120px;
+  --cs-pad: clamp(16px, 4vw, 40px);
+  min-height: 100%;
+  color: var(--sn-ink);
+  background: var(--sn-bg);
+}
+
+.top {
+  display: flex;
+  justify-content: flex-end;
+  box-sizing: border-box;
+  max-width: var(--cs-max);
+  margin: 0 auto;
+  padding: 12px var(--cs-pad);
+}
+
+/* Short enough to leave a peek of the case study below the fold. */
+.stage {
+  position: relative;
+  box-sizing: border-box;
+  width: calc(100% - 2 * var(--cs-pad));
+  max-width: var(--cs-max);
+  height: min(860px, calc(100svh - 58px - 112px));
+  min-height: 560px;
+  margin: 0 auto;
+  overflow: hidden;
+  border-radius: 18px;
+  background: var(--sn-bg);
+  box-shadow:
+    0 0 0 1px var(--sn-line),
+    0 30px 80px -40px rgb(20 24 32 / 0.35);
+}
+
+/* Scrolling past the end of the prototype carries on down the page. */
+.stage :global([data-scroll-area]) {
+  overscroll-behavior: auto;
+}
+
+@media (max-width: 600px) {
+  .top {
+    padding-block: 8px;
+  }
+  .stage {
+    width: calc(100% - 16px);
+    height: calc(100svh - 50px - 96px);
+    min-height: 500px;
+    border-radius: 16px;
+  }
+}

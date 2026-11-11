@@ -1,0 +1,325 @@
+/* The visit starts as a transcript alone. Creating the note makes room for a
+   sheet of paper on the desk beside it. Signing files the paper into the
+   patient's episode. On phones each of those is its own screen. */
+.root {
+  --gutter: 20px;
+  position: relative;
+  height: 100%;
+  display: grid;
+  grid-template-rows: auto auto minmax(0, 1fr);
+  overflow: hidden;
+  font-family: var(--sn-font);
+  font-size: var(--fs, 15px);
+  line-height: 1.5;
+  color: var(--sn-ink);
+  background: var(--sn-bg);
+  -webkit-font-smoothing: antialiased;
+}
+.root[data-note-compact] {
+  --gutter: 16px;
+}
+
+/* Scroll areas scroll on wheel, touch and keys, with the bars kept out of the way. */
+.scroll {
+  min-height: 0;
+  overflow: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: none;
+}
+.scroll::-webkit-scrollbar {
+  display: none;
+}
+
+/* ------------------------------------------------------------ header */
+.top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px var(--gutter) 8px;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  min-width: 0;
+}
+.mark {
+  flex: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 4px;
+  background:
+    linear-gradient(var(--sn-accent), var(--sn-accent)) 3px 4px / 8px 1.5px no-repeat,
+    linear-gradient(var(--sn-accent), var(--sn-accent)) 3px 7px / 6px 1.5px no-repeat,
+    linear-gradient(var(--sn-accent), var(--sn-accent)) 3px 10px / 8px 1.5px no-repeat;
+  box-shadow: inset 0 0 0 1.25px color-mix(in oklab, var(--sn-accent) 40%, transparent);
+}
+.org {
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+.crumb {
+  font-size: 14px;
+  color: var(--sn-ink-3);
+}
+.crumbHere {
+  font-size: 14px;
+  color: var(--sn-ink-2);
+}
+@media (max-width: 520px) {
+  .crumb,
+  .crumbHere {
+    display: none;
+  }
+}
+
+.topRight {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+}
+
+.env {
+  height: auto;
+  padding: 3px 8px;
+  border: 0;
+  font-size: 11.5px;
+  font-weight: 500;
+  line-height: 1.35;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--sn-ink-3);
+  background: transparent;
+  box-shadow: inset 0 0 0 1px var(--sn-line);
+  cursor: help;
+
+  &:focus-visible {
+    outline: 2px solid var(--sn-accent);
+    outline-offset: 2px;
+  }
+}
+
+.mePlaceholder {
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--sn-accent);
+  background: color-mix(in oklab, var(--sn-accent) 12%, var(--sn-surface));
+}
+
+.ghost {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 32px;
+  padding: 0 12px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 500;
+  background: var(--sn-surface);
+  box-shadow: var(--sn-shadow-card);
+  transition: transform 160ms var(--sn-ease-out);
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: -6px -2px;
+  }
+  &:active {
+    transform: scale(0.96);
+  }
+  &:focus-visible {
+    outline: 2px solid var(--sn-accent);
+    outline-offset: 2px;
+  }
+}
+
+/* ------------------------------------------------------------ patient context */
+.context {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 2px var(--gutter) 14px;
+}
+.who {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  column-gap: 10px;
+  min-width: 0;
+}
+.name {
+  font-size: 1.2em;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+}
+.visit {
+  font-size: 0.87em;
+  color: var(--sn-ink-3);
+}
+.root[data-note-compact] .context {
+  align-items: flex-end;
+}
+.root[data-note-compact] .who {
+  flex-direction: column;
+}
+.root[data-note-compact] .name {
+  font-size: 1.13em;
+}
+
+/* ------------------------------------------------------------ work area */
+.work {
+  position: relative;
+  display: grid;
+  min-height: 0;
+  border-top: 1px solid var(--sn-line);
+}
+.stage {
+  border-top: 1px solid var(--sn-line);
+}
+.col {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  min-width: 0;
+  overflow: hidden;
+}
+.col > .scroll {
+  flex: 1 1 auto;
+}
+
+/* Both columns keep a fixed measure while the grid changes, so text never rewraps. */
+.transcriptCol {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-height: 0;
+  width: 100%;
+  max-width: var(--tw, 600px);
+  margin: 0 auto;
+  will-change: transform;
+}
+.root[data-note-compact] .transcriptCol {
+  max-width: 680px;
+}
+.transcriptScroll {
+  flex: 1 1 auto;
+  padding: 16px var(--gutter) 0;
+}
+.listening {
+  margin: 4px 0 0;
+  font-size: 0.93em;
+  color: var(--sn-ink-3);
+}
+
+.deskScroll {
+  padding: 20px var(--gutter) 64px;
+}
+.root[data-note-compact] .deskScroll {
+  padding: 12px 10px 32px;
+}
+.paperCol {
+  will-change: transform;
+}
+
+/* ------------------------------------------------------------ reopened note */
+.docbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  max-width: var(--pw, 740px);
+  margin: 0 auto 12px;
+}
+.root[data-note-compact] .docbar {
+  max-width: 740px;
+  padding: 0 4px;
+}
+.back {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 32px;
+  padding: 0 10px;
+  margin-left: -8px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--sn-ink-2);
+  transition:
+    background-color 150ms ease,
+    color 150ms ease,
+    transform 160ms var(--sn-ease-out);
+
+  &:active {
+    transform: scale(0.97);
+  }
+  &:focus-visible {
+    outline: 2px solid var(--sn-accent);
+    outline-offset: 2px;
+  }
+}
+.evidence {
+  --switch-checked-color: var(--sn-accent);
+  margin-right: 2px;
+}
+.evidenceLabel {
+  padding-inline-end: 9px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--sn-ink-2);
+  cursor: pointer;
+}
+@media (hover: hover) and (pointer: fine) {
+  .back:hover {
+    color: var(--sn-ink);
+    background: var(--sn-hover);
+  }
+}
+
+/* ------------------------------------------------------------ phone drafting ticker */
+.ticker {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  overflow: hidden;
+  max-width: 740px;
+  margin: 0 auto 10px;
+  padding: 9px 12px;
+  border-radius: var(--r, 10px);
+  font-size: 13px;
+  background: color-mix(in oklab, var(--sn-accent) 7%, transparent);
+}
+.tickerLabel,
+.tickerTime {
+  font-family: var(--sn-mono);
+  font-size: 0.8em;
+  font-variant-numeric: tabular-nums;
+}
+.tickerLabel {
+  color: var(--sn-ink-3);
+}
+.tickerText {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--sn-ink-2);
+}
+.tickerTime {
+  margin-right: 4px;
+  color: var(--sn-accent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ghost:active,
+  .back:active {
+    transform: none;
+  }
+}
